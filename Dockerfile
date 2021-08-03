@@ -1,12 +1,12 @@
 # example on how to build docker:
-# DOCKER_BUILDKIT=1 docker build -t benjamintanweihao/kubeflow-mnist . -f Dockerfile
-# DOCKER_BUILDKIT=1 docker build --no-cache -t benjamintanweihao/kubeflow-mnist env -f Dockerfile
+# DOCKER_BUILDKIT=1 docker build -t bdcavanau/kubeflow-mnist . -f Dockerfile
+# DOCKER_BUILDKIT=1 docker build --no-cache -t dcavanau/kubeflow-mnist env -f Dockerfile
 
 # example on how to run:
-# docker run -it benjamintanweihao/kubeflow-mnist /bin/bash
+# docker run -it dcavanau/kubeflow-mnist /bin/bash
 
 FROM tensorflow/tensorflow:1.14.0-gpu-py3
-LABEL MAINTAINER "Benjamin Tan <benjamintanweihao@gmail.com>"
+LABEL MAINTAINER "David Cavanaugh <dcavanau@us.ibm.com>"
 SHELL ["/bin/bash", "-c"]
 
 # Set the locale

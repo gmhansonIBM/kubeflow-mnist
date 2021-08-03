@@ -15,7 +15,7 @@ Then run training:
 
 # Building the image
 
-DOCKER_BUILDKIT=1 docker build -t benjamintanweihao/kubeflow-mnist env -f Dockerfile
+DOCKER_BUILDKIT=1 docker build -t dcavanau/kubeflow-mnist env -f Dockerfile
 
 # Tensorflow Serving
 
