@@ -59,8 +59,8 @@ def train_and_eval_op(image: str, pvolume: PipelineVolume, data_dir: str, ):
     name='Fashion MNIST Training Pipeline',
     description='Fashion MNIST Training Pipeline to be executed on KubeFlow.'
 )
-def training_pipeline(image: str = 'benjamintanweihao/kubeflow-mnist',
-                      repo_url: str = 'https://github.com/benjamintanweihao/kubeflow-mnist.git',
+def training_pipeline(image: str = 'dcavanau/kubeflow-mnist',
+                      repo_url: str = 'https://github.ibm.com/dcavanau/kubeflow-mnist.git',
                       data_dir: str = '/workspace'):
     git_clone = git_clone_op(repo_url=repo_url)
 
