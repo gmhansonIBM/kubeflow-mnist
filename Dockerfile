@@ -5,7 +5,7 @@
 # example on how to run:
 # docker run -it dcavanau/kubeflow-mnist /bin/bash
 
-FROM tensorflow/tensorflow:1.14.0-gpu-py3
+FROM  tensorflow/tensorflow:2.2.3-gpu-py3
 LABEL MAINTAINER "David Cavanaugh <dcavanau@us.ibm.com>"
 SHELL ["/bin/bash", "-c"]
 
@@ -28,7 +28,7 @@ RUN apt-get install -y --no-install-recommends \
 
 # install conda
 WORKDIR /tmp
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.7.12-Linux-x86_64.sh -O ~/miniconda.sh && \
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh && \
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \

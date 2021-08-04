@@ -65,8 +65,8 @@ def serving_op(image: str,
     description='This is a single component Pipeline for Serving'
 )
 def serving_pipeline(
-        image: str = 'benjamintanweihao/kubeflow-mnist',
-        repo_url: str = 'https://github.com/benjamintanweihao/kubeflow-mnist.git',
+        image: str = 'dcavanau/kubeflow-mnist',
+        repo_url: str = 'https://github.com/dcavanau/kubeflow-mnist.git',
 ):
     model_name = 'fmnist'
     export_bucket = 'servedmodels'

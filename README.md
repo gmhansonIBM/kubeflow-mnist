@@ -22,4 +22,4 @@ DOCKER_BUILDKIT=1 docker build -t dcavanau/kubeflow-mnist env -f Dockerfile
 docker run -t --rm -p 8501:8501 \
     -v "$PWD/export:/models/mnist" \
     -e MODEL_NAME=mnist \
-    tensorflow/serving:1.14.0
+    tensorflow/serving:2.4.2
