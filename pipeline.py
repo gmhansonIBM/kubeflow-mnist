@@ -1,5 +1,9 @@
+
 import kfp.dsl as dsl
 from kfp.dsl import PipelineVolume
+from kubernetes.client import V1VolumeMount
+from kubernetes.client import V1Volume
+from kubernetes.client import V1SecretVolumeSource
 
 # To compile the pipeline:
 #   dsl-compile --py pipeline.py --output pipeline.tar.gz
@@ -10,6 +14,10 @@ def git_clone_op(repo_url: str):
     image = 'alpine/git:latest'
 
     commands = [
+        "mkdir ~/.ssh",
+        "cp /etc/ssh-key/id_rsa ~/.ssh/id_rsa",
+        "chmod 600 ~/.ssh/id_rsa",
+        "ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts",
         f"git clone {repo_url} {PROJECT_ROOT}",
         f"cd {PROJECT_ROOT}"]
 
@@ -28,6 +36,19 @@ def git_clone_op(repo_url: str):
         container_kwargs={'image_pull_policy': 'IfNotPresent'},
         pvolumes={"/workspace": volume_op.volume}
     )
+
+    # Mount Git Secrets
+    op.add_volume(
+        V1Volume(
+            name='ssh-key-volume',
+            secret=V1SecretVolumeSource(
+                secret_name='ssh-key-secret')))
+                           
+    op.add_volume_mount(
+        V1VolumeMount(
+            mount_path='/etc/ssh-key', 
+            name='ssh-key-volume', 
+            read_only=True))
 
     return op
 
