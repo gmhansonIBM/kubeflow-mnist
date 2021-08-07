@@ -26,6 +26,8 @@ RUN apt-get install -y --no-install-recommends \
     google-perftools && \
     rm -rf /var/lib/apt/lists/*
 
+RUN adduser -u 1000 kflow 
+
 # install conda
 WORKDIR /tmp
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
@@ -43,6 +45,8 @@ RUN /opt/conda/bin/conda clean -afy
 # Cleanup
 RUN rm -rf /workspace/{nvidia,docker}-examples && rm -rf /usr/local/nvidia-examples && \
     rm /tmp/kubeflow-mnist/conda/environment.yml
+
+# USER 1000
 
 # switch to the conda environment
 RUN echo "conda activate kubeflow-mnist" >> ~/.bashrc
