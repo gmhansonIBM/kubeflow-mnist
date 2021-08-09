@@ -46,16 +46,16 @@ RUN /opt/conda/bin/conda clean -afy
 RUN rm -rf /workspace/{nvidia,docker}-examples && rm -rf /usr/local/nvidia-examples && \
     rm /tmp/kubeflow-mnist/conda/environment.yml
 
+# make /bin/sh symlink to bash instead of dash:
+RUN echo "dash dash/sh boolean false" | debconf-set-selections && \
+    DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
+
 USER kflow
 
 # switch to the conda environment
 RUN echo "conda activate kubeflow-mnist" >> ~/.bashrc
 ENV PATH /opt/conda/envs/kubeflow-mnist/bin:$PATH
 RUN /opt/conda/bin/activate kubeflow-mnist
-
-# make /bin/sh symlink to bash instead of dash:
-RUN echo "dash dash/sh boolean false" | debconf-set-selections && \
-    DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
 
 # Set the new Allocator
 ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libtcmalloc.so.4
