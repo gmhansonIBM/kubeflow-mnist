@@ -26,7 +26,7 @@ RUN apt-get install -y --no-install-recommends \
     google-perftools && \
     rm -rf /var/lib/apt/lists/*
 
-RUN adduser -u 1000 kflow 
+RUN useradd -m -s /bin/bash -g root -G sudo -u 1000 kflow 
 
 # install conda
 WORKDIR /tmp
