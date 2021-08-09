@@ -50,7 +50,7 @@ RUN rm -rf /workspace/{nvidia,docker}-examples && rm -rf /usr/local/nvidia-examp
 RUN echo "dash dash/sh boolean false" | debconf-set-selections && \
     DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
 
-USER kflow
+USER 1000
 
 # switch to the conda environment
 RUN echo "conda activate kubeflow-mnist" >> ~/.bashrc
