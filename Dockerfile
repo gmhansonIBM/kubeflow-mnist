@@ -46,7 +46,7 @@ RUN /opt/conda/bin/conda clean -afy
 RUN rm -rf /workspace/{nvidia,docker}-examples && rm -rf /usr/local/nvidia-examples && \
     rm /tmp/kubeflow-mnist/conda/environment.yml
 
-# USER 1000
+USER kflow
 
 # switch to the conda environment
 RUN echo "conda activate kubeflow-mnist" >> ~/.bashrc
