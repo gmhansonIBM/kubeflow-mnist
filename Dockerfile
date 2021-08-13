@@ -60,6 +60,6 @@ ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libtcmalloc.so.4
 
 # pull the latest version from Github
 WORKDIR /root
-RUN git clone -n https://61acc7bc6d89fb89dffb2c7e2142adffef6b13f1:x-oauth-basic@github.ibm.com/dcavanau/kubeflow-mnist.git
+RUN git clone -n https://c9cfa7bed7befcba0f905e145f7d458fa563f245:x-oauth-basic@github.com/dcavanau/kubeflow-mnist.git
 WORKDIR /root/kubeflow-mnist
 RUN git checkout master
