@@ -50,8 +50,6 @@ RUN rm -rf /workspace/{nvidia,docker}-examples && rm -rf /usr/local/nvidia-examp
 RUN echo "dash dash/sh boolean false" | debconf-set-selections && \
     DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
 
-USER 1000
-
 # switch to the conda environment
 RUN echo "conda activate kubeflow-mnist" >> ~/.bashrc
 ENV PATH /opt/conda/envs/kubeflow-mnist/bin:$PATH
@@ -59,3 +57,9 @@ RUN /opt/conda/bin/activate kubeflow-mnist
 
 # Set the new Allocator
 ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libtcmalloc.so.4
+
+# pull the latest version from Github
+WORKDIR /root
+RUN git clone -n https://github.ibm.com/dcavanau/kubeflow-mnist.git
+WORKDIR /root/kubeflow-mnist
+RUN git checkout master

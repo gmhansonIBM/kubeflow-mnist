@@ -13,13 +13,14 @@ from constants import PROJECT_ROOT, CONDA_PYTHON_CMD
 def git_clone_op(repo_url: str):
     image = 'alpine/git:latest'
 
-    commands = [
-        "mkdir ~/.ssh",
-        "cp /etc/ssh-key/id_rsa ~/.ssh/id_rsa",
-        "chmod 600 ~/.ssh/id_rsa",
-        "ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts",
-        f"git clone {repo_url} {PROJECT_ROOT}",
-        f"cd {PROJECT_ROOT}"]
+#    commands = [
+#        "whoami | echo",
+#        "mkdir ~/.ssh",
+#        "cp /etc/ssh-key/id_rsa ~/.ssh/id_rsa",
+#        "chmod 600 ~/.ssh/id_rsa",
+#        "ssh-keyscan github.ibm.com >> ~/.ssh/known_hosts",
+#        f"git clone {repo_url} {PROJECT_ROOT}",
+#        f"cd {PROJECT_ROOT}"]
 
     volume_op = dsl.VolumeOp(
         name="create pipeline volume",
@@ -38,17 +39,17 @@ def git_clone_op(repo_url: str):
     )
 
     # Mount Git Secrets
-    op.add_volume(
-        V1Volume(
-            name='ssh-key-volume',
-            secret=V1SecretVolumeSource(
-                secret_name='ssh-key-secret')))
+#    op.add_volume(
+#        V1Volume(
+#            name='ssh-key-volume',
+#            secret=V1SecretVolumeSource(
+#                secret_name='ssh-key-secret')))
                            
-    op.add_volume_mount(
-        V1VolumeMount(
-            mount_path='/etc/ssh-key', 
-            name='ssh-key-volume', 
-            read_only=True))
+#    op.add_volume_mount(
+#        V1VolumeMount(
+#            mount_path='/etc/ssh-key', 
+#            name='ssh-key-volume', 
+#            read_only=True))
 
     return op
 
