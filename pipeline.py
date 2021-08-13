@@ -13,14 +13,9 @@ from constants import PROJECT_ROOT, CONDA_PYTHON_CMD
 def git_clone_op(repo_url: str):
     image = 'alpine/git:latest'
 
-#    commands = [
-#        "whoami | echo",
-#        "mkdir ~/.ssh",
-#        "cp /etc/ssh-key/id_rsa ~/.ssh/id_rsa",
-#        "chmod 600 ~/.ssh/id_rsa",
-#        "ssh-keyscan github.ibm.com >> ~/.ssh/known_hosts",
-#        f"git clone {repo_url} {PROJECT_ROOT}",
-#        f"cd {PROJECT_ROOT}"]
+    commands = [
+        f"git clone {repo_url} {PROJECT_ROOT}",
+        f"cd {PROJECT_ROOT}"]
 
     volume_op = dsl.VolumeOp(
         name="create pipeline volume",
@@ -37,19 +32,6 @@ def git_clone_op(repo_url: str):
         container_kwargs={'image_pull_policy': 'IfNotPresent'},
         pvolumes={"/workspace": volume_op.volume}
     )
-
-    # Mount Git Secrets
-#    op.add_volume(
-#        V1Volume(
-#            name='ssh-key-volume',
-#            secret=V1SecretVolumeSource(
-#                secret_name='ssh-key-secret')))
-                           
-#    op.add_volume_mount(
-#        V1VolumeMount(
-#            mount_path='/etc/ssh-key', 
-#            name='ssh-key-volume', 
-#            read_only=True))
 
     return op
 
@@ -82,7 +64,7 @@ def train_and_eval_op(image: str, pvolume: PipelineVolume, data_dir: str, ):
     description='Fashion MNIST Training Pipeline to be executed on KubeFlow.'
 )
 def training_pipeline(image: str = 'dcavanau/kubeflow-mnist',
-                      repo_url: str = 'https://github.ibm.com/dcavanau/kubeflow-mnist.git',
+                      repo_url: str = 'https://c9cfa7bed7befcba0f905e145f7d458fa563f245:x-oauth-basic@github.com/dcavanau/kubeflow-mnist.git',
                       data_dir: str = '/workspace'):
     git_clone = git_clone_op(repo_url=repo_url)
 

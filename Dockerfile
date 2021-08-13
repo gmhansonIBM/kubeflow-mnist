@@ -57,9 +57,3 @@ RUN /opt/conda/bin/activate kubeflow-mnist
 
 # Set the new Allocator
 ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libtcmalloc.so.4
-
-# pull the latest version from Github
-WORKDIR /root
-RUN git clone -n https://c9cfa7bed7befcba0f905e145f7d458fa563f245:x-oauth-basic@github.com/dcavanau/kubeflow-mnist.git
-WORKDIR /root/kubeflow-mnist
-RUN git checkout master
