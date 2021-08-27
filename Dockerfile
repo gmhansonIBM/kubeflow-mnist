@@ -81,7 +81,11 @@ RUN python preprocessing.py --data_dir=/root/data
 # Train
 RUN python train.py --data_dir=/root/data 
 
+# path from /workspace/kubeflow-mnist/output.txt 
+RUN export MNIST_PATH=$(cat /workspace/kubeflow-mnist/output.txt) && \
+    tar -czvf kubeflow-mnist.tar.gz $MNIST_PATH
 
+# curl tar to artfactory
 
 # Push newly created folder to IEAM 
 # Tar contents of /workspace dir --> removes need to know folder name
