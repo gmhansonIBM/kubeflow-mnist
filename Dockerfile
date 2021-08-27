@@ -1,12 +1,17 @@
-# example on how to build docker:
-# DOCKER_BUILDKIT=1 docker build -t bdcavanau/kubeflow-mnist . -f Dockerfile
-# DOCKER_BUILDKIT=1 docker build --no-cache -t dcavanau/kubeflow-mnist env -f Dockerfile
 
-# example on how to run:
-# docker run -it dcavanau/kubeflow-mnist /bin/bash
+#############################
+# installing the Horizon CLI
+############################
+FROM centos:8 AS horizon_cli
+COPY horizon-cli*.rpm /data/horizon-cli*.rpm
+RUN rpm -i /data/horizon-cli*.rpm
 
-FROM  tensorflow/tensorflow:2.2.3-gpu-py3
+
+FROM  tensorflow/tensorflow:2.2.3-gpu-py3 AS TensorFlow
 LABEL MAINTAINER "David Cavanaugh <dcavanau@us.ibm.com>"
+
+ENV KF_VERSION 1.2.0
+
 SHELL ["/bin/bash", "-c"]
 
 # Set the locale
@@ -57,3 +62,31 @@ RUN /opt/conda/bin/activate kubeflow-mnist
 
 # Set the new Allocator
 ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libtcmalloc.so.4
+
+
+COPY --from=horizon_cli /usr/bin/hzn /usr/bin/hzn
+
+# Install kfctl
+RUN wget https://github.com/kubeflow/kfctl/releases/download/v${KF_VERSION}/kfctl_v${KF_VERSION}-0-gbc038f9_linux.tar.gz && \
+    tar -xvf kfctl_v${KF_VERSION}-0-gbc038f9_linux.tar.gz && \
+    mv ./kfctl /usr/local/bin/ && \
+    rm kfctl_v${KF_VERSION}-0-gbc038f9_linux.tar.gz && \
+    kfctl version 
+
+# Copy python files
+COPY *.py .
+
+# Pre-process
+RUN python preprocessing.py --data_dir=/root/data 
+# Train
+RUN python train.py --data_dir=/root/data 
+
+
+
+# Push newly created folder to IEAM 
+# Tar contents of /workspace dir --> removes need to know folder name
+# output.txt has the file path for the new version
+# folder is name of gihub repo
+# 
+# hzn command
+# hzn mms publish ...
