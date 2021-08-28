@@ -1,6 +1,15 @@
+
 # kubeflow-mnist
 
 ## Running Locally
+
+Requires horizon-cli-2.28.0-338.x86_64.rpm added to the root of the project.
+
+Verify you docker has over 3 GB memory
+```
+docker info  | grep Memory
+ Total Memory: 3.844GiB
+```
 
 Install the Conda environment:
 

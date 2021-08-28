@@ -81,7 +81,18 @@ RUN python preprocessing.py --data_dir=/root/data
 # Train
 RUN python train.py --data_dir=/root/data 
 
+# path from /workspace/kubeflow-mnist/output.txt 
+RUN export MNIST_PATH=$(cat /workspace/kubeflow-mnist/output.txt) && \
+    tar -czvf kubeflow-mnist.tar.gz $MNIST_PATH
 
+# if the zip needs the folder name
+#    export MNIST_FOLDER=$(echo $MNIST_PATH | tr "/" "\n" | grep [0-9]) && \
+#    tar -czvf kubeflow-mnist-${MNIST_FOLDER}.tar.gz $MNIST_PATH
+
+# curl tar to artfactory
+
+# https://jfrog.com/knowledge-base/how-do-i-deploy-large-files-to-artifactory/
+# curl -X PUT -u myUser:myPassword -T test.txt "http://localhost:8081/artifactory/libs-release-local/test/test.txt"
 
 # Push newly created folder to IEAM 
 # Tar contents of /workspace dir --> removes need to know folder name
