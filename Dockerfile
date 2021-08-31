@@ -55,7 +55,6 @@ RUN /opt/conda/bin/activate kubeflow-mnist
 ENV LD_PRELOAD /usr/lib/x86_64-linux-gnu/libtcmalloc.so.4
 
 
-COPY --from=horizon_cli /usr/bin/hzn /usr/bin/hzn
 
 # Install kfctl
 RUN wget https://github.com/kubeflow/kfctl/releases/download/v${KF_VERSION}/kfctl_v${KF_VERSION}-0-gbc038f9_linux.tar.gz && \
