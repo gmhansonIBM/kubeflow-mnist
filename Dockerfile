@@ -1,12 +1,3 @@
-
-#############################
-# installing the Horizon CLI
-############################
-ENV HZN_CLI_VERSION 2.28.0-338
-RUN curl -L -O https://github.com/open-horizon/anax/releases/download/v${HZN_CLI_VERSION}/horizon-agent-linux-rpm-x86_64.tar.gz && \
-    tar xvf horizon-agent-linux-rpm-x86_64.tar.gz && \
-    rpm -i horizon-cli*.rpm  
-
 FROM  tensorflow/tensorflow:2.2.3-gpu-py3 AS TensorFlow
 LABEL MAINTAINER "David Cavanaugh <dcavanau@us.ibm.com>"
 
