@@ -2,10 +2,9 @@
 #############################
 # installing the Horizon CLI
 ############################
-FROM centos:8 AS horizon_cli
-COPY horizon-cli*.rpm /data/horizon-cli*.rpm
-RUN rpm -i /data/horizon-cli*.rpm
-
+RUN curl -L -O https://github.com/open-horizon/anax/releases/latest/download/horizon-agent-linux-rpm-x86_64.tar.gz && \
+    tar xvf horizon-agent-linux-rpm-x86_64.tar.gz && \
+    rpm -i horizon-cli*.rpm 
 
 FROM  tensorflow/tensorflow:2.2.3-gpu-py3 AS TensorFlow
 LABEL MAINTAINER "David Cavanaugh <dcavanau@us.ibm.com>"
